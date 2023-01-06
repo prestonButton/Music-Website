@@ -5,6 +5,8 @@
 
 "use strict";
 
+/*************************************************************************** */
+
 // Global variables
 //navbar variables
 const adminButton = document.getElementById("adminButton");
@@ -19,13 +21,13 @@ const eventTime = document.getElementById("eventTime");
 const eventLocation = document.getElementById("eventLocation");
 const eventDescription = document.getElementById("eventDescription");
 //edit and delete buttons, hidden until admin mode is turned on
-const editButton = document.getElementById("editButton");
-const deleteButton = document.getElementById("deleteButton");
+const editButton = document.querySelectorAll(".editButton");
+const deleteButton = document.querySelectorAll(".deleteButton");
 
 //modal variables
 const modal = document.querySelectorAll(".modal");
-const modalCloseBtn = document.querySelectorAll(".modal-close");
-const overlay = document.getElementById("overlay");
+const modalCloseBtn = document.querySelectorAll(".closeModalBtn");
+const overlay = document.querySelector(".overlay");
 
 //add event modal variables
 const addEventModal = document.getElementById("addEventModal");
@@ -62,6 +64,44 @@ const loginSubmit = document.getElementById("loginSubmit");
 //admin mode variables. this variable is used to determine if the user is in admin mode or not
 let adminMode = false;
 
+/*************************************************************************** */
+
+//functions
+const openModal = (whichModal) => {
+  whichModal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+};
+
+const closeModal = () => {
+    for(let i = 0; i < modal.length; i++){
+        modal[i].classList.add("hidden");
+    }
+    overlay.classList.add("hidden");
+};
+
+/*************************************************************************** */
+
+//modal close event listeners
+
+//if modal close button is hit
+for(let i = 0; i < modalCloseBtn.length; i++){
+    modalCloseBtn[i].addEventListener("click", () => {
+        closeModal();
+    });
+}
+
+//if user clicks off the modal
+overlay.addEventListener("click", () => {
+    closeModal();
+});
+
+//if escape key is pressed
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        closeModal();
+    }
+});
+
 //Program Logic pseudo code
 //1. when user clicks on admin button, user is presented with the login modal
 //  a) if user enters correct username and password, admin mode is turned on
@@ -93,5 +133,47 @@ let adminMode = false;
 //  b) if user clicks on cancel, the event is not deleted
 //      -the delete event modal is closed
 
+/*************************************************************************** */
 
+//1. when user clicks on admin button, user is presented with the login modal
+//  a) if user enters correct username and password, admin mode is turned on
+//      - login modal is closed
+//      -addEventButton is displayed in the navbar
+//      -edit and delete buttons are displayed on each event
+//      -Admin button text is changed to "Logout"
+//  b) if user enters incorrect username and password, admin mode is not turned on
+//      -user is presented with an error message
 
+adminButton.addEventListener("click", () => {
+  if (adminMode) {
+    adminMode = false;
+    adminButton.textContent = "Admin";
+    addEventButton.classList.add("hidden");
+    editButton.classList.add("hidden");
+    deleteButton.classList.add("hidden");
+  } else {
+    openModal(loginModal);
+  }
+});
+
+loginSubmit.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (username.value === "admin" && password.value === "password") {
+    adminMode = true;
+
+    closeModal(loginModal);
+
+    addEventButton.classList.remove("hidden");
+
+    for(let i = 0; i < editButton.length; i++){
+        editButton[i].classList.remove("hidden");
+        deleteButton[i].classList.remove("hidden");
+    }
+
+    adminButton.textContent = "Logout";
+  } else {
+    //TODO: perhaps, have the error message just appear in the modal instead of an alert
+    alert("Incorrect username or password");
+    loginForm.reset();
+  }
+});
