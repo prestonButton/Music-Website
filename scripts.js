@@ -73,10 +73,10 @@ const openModal = (whichModal) => {
 };
 
 const closeModal = () => {
-    for(let i = 0; i < modal.length; i++){
-        modal[i].classList.add("hidden");
-    }
-    overlay.classList.add("hidden");
+  for (let i = 0; i < modal.length; i++) {
+    modal[i].classList.add("hidden");
+  }
+  overlay.classList.add("hidden");
 };
 
 /*************************************************************************** */
@@ -84,22 +84,22 @@ const closeModal = () => {
 //modal close event listeners
 
 //if modal close button is hit
-for(let i = 0; i < modalCloseBtn.length; i++){
-    modalCloseBtn[i].addEventListener("click", () => {
-        closeModal();
-    });
+for (let i = 0; i < modalCloseBtn.length; i++) {
+  modalCloseBtn[i].addEventListener("click", () => {
+    closeModal();
+  });
 }
 
 //if user clicks off the modal
 overlay.addEventListener("click", () => {
-    closeModal();
+  closeModal();
 });
 
 //if escape key is pressed
 document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-        closeModal();
-    }
+  if (e.key === "Escape") {
+    closeModal();
+  }
 });
 
 //Program Logic pseudo code
@@ -147,10 +147,16 @@ document.addEventListener("keydown", (e) => {
 adminButton.addEventListener("click", () => {
   if (adminMode) {
     adminMode = false;
+
+    loginForm.reset();
+
     adminButton.textContent = "Admin";
     addEventButton.classList.add("hidden");
-    editButton.classList.add("hidden");
-    deleteButton.classList.add("hidden");
+
+    for (let i = 0; i < editButton.length; i++) {
+      editButton[i].classList.add("hidden");
+      deleteButton[i].classList.add("hidden");
+    }
   } else {
     openModal(loginModal);
   }
@@ -165,9 +171,9 @@ loginSubmit.addEventListener("click", (e) => {
 
     addEventButton.classList.remove("hidden");
 
-    for(let i = 0; i < editButton.length; i++){
-        editButton[i].classList.remove("hidden");
-        deleteButton[i].classList.remove("hidden");
+    for (let i = 0; i < editButton.length; i++) {
+      editButton[i].classList.remove("hidden");
+      deleteButton[i].classList.remove("hidden");
     }
 
     adminButton.textContent = "Logout";
