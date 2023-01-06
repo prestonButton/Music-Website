@@ -62,4 +62,36 @@ const loginSubmit = document.getElementById("loginSubmit");
 //admin mode variables. this variable is used to determine if the user is in admin mode or not
 let adminMode = false;
 
+//Program Logic pseudo code
+//1. when user clicks on admin button, user is presented with the login modal
+//  a) if user enters correct username and password, admin mode is turned on
+//      - login modal is closed
+//      -addEventButton is displayed in the navbar
+//      -edit and delete buttons are displayed on each event
+//      -Admin button text is changed to "Logout"
+//  b) if user enters incorrect username and password, admin mode is not turned on
+//      -user is presented with an error message
+//***The rest of this logic only occurs if admin mode is on***
+//2. when user clicks on addEventButton, user is presented with the add event modal
+//  a) if user enters all required fields, a new event is created and added to the events container
+//      -the add event modal is closed
+//      -the new event is displayed in the events container
+//      -the new event has edit and delete buttons
+//  b) if user does not enter all required fields, a new event is not created
+//      -user is presented with an error message
+//3. when user clicks on edit button, user is presented with the edit event modal
+//  a) the modal feilds are populated with the current event information
+//  b) if user enters all required fields, the event is updated
+//      -the edit event modal is closed
+//      -the updated event is displayed in the events container
+//  c) if user does not enter all required fields, the event is not updated
+//      -user is presented with an error message
+//4. when user clicks on delete button, user is presented with the delete event modal
+//  a) if user clicks on delete, the event is deleted
+//      -the delete event modal is closed
+//      -the event is removed from the events container
+//  b) if user clicks on cancel, the event is not deleted
+//      -the delete event modal is closed
+
+
 
