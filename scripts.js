@@ -21,8 +21,8 @@ const eventTime = document.getElementById("eventTime");
 const eventLocation = document.getElementById("eventLocation");
 const eventDescription = document.getElementById("eventDescription");
 //edit and delete buttons, hidden until admin mode is turned on
-const editButton = document.querySelectorAll(".editButton");
-const deleteButton = document.querySelectorAll(".deleteButton");
+const editButton = document.querySelector(".editButton");
+const deleteButton = document.querySelector(".deleteButton");
 
 //modal variables
 const modal = document.querySelectorAll(".modal");
@@ -102,6 +102,8 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+/*************************************************************************** */
+
 //Program Logic pseudo code
 //1. when user clicks on admin button, user is presented with the login modal
 //  a) if user enters correct username and password, admin mode is turned on
@@ -109,16 +111,30 @@ document.addEventListener("keydown", (e) => {
 //      -addEventButton is displayed in the navbar
 //      -edit and delete buttons are displayed on each event
 //      -Admin button text is changed to "Logout"
+//      -if number of events is 0, open add event modal
 //  b) if user enters incorrect username and password, admin mode is not turned on
 //      -user is presented with an error message
+//      -login modal is not closed
+//      -addEventButton is not displayed in the navbar
+//      -edit and delete buttons are not displayed on each event
+//      -Admin button text is not changed to "Logout"
+//  c) when user clicks on logout, admin mode is turned off
+//      -addEventButton is hidden in the navbar
+//      -edit and delete buttons are hidden on each event
+//      -Admin button text is changed to "Admin"
+//
 //***The rest of this logic only occurs if admin mode is on***
+
 //2. when user clicks on addEventButton, user is presented with the add event modal
-//  a) if user enters all required fields, a new event is created and added to the events container
+//  a) if user enters all required fields, a new event is created stored in an event object
 //      -the add event modal is closed
-//      -the new event is displayed in the events container
+//      -a new event referencing the event object is created and displayed in the events container, 
+//      -the event object is nested in a bigger object that stores all events
 //      -the new event has edit and delete buttons
 //  b) if user does not enter all required fields, a new event is not created
 //      -user is presented with an error message
+//      -the add event modal is not closed
+//
 //3. when user clicks on edit button, user is presented with the edit event modal
 //  a) the modal feilds are populated with the current event information
 //  b) if user enters all required fields, the event is updated
@@ -126,6 +142,8 @@ document.addEventListener("keydown", (e) => {
 //      -the updated event is displayed in the events container
 //  c) if user does not enter all required fields, the event is not updated
 //      -user is presented with an error message
+//      -the edit event modal is not closed
+//
 //4. when user clicks on delete button, user is presented with the delete event modal
 //  a) if user clicks on delete, the event is deleted
 //      -the delete event modal is closed
@@ -135,111 +153,6 @@ document.addEventListener("keydown", (e) => {
 
 /*************************************************************************** */
 
-//1. when user clicks on admin button, user is presented with the login modal
-//  a) if user enters correct username and password, admin mode is turned on
-//      - login modal is closed
-//      -addEventButton is displayed in the navbar
-//      -edit and delete buttons are displayed on each event
-//      -Admin button text is changed to "Logout"
-//  b) if user enters incorrect username and password, admin mode is not turned on
-//      -user is presented with an error message
 
-adminButton.addEventListener("click", () => {
-  if (adminMode) {
-    adminMode = false;
-
-    loginForm.reset();
-
-    adminButton.textContent = "Admin";
-    addEventButton.classList.add("hidden");
-
-    for (let i = 0; i < editButton.length; i++) {
-      editButton[i].classList.add("hidden");
-      deleteButton[i].classList.add("hidden");
-    }
-  } else {
-    openModal(loginModal);
-  }
-});
-
-loginSubmit.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (username.value === "a" && password.value === "a") {
-    adminMode = true;
-
-    closeModal(loginModal);
-
-    addEventButton.classList.remove("hidden");
-
-    for (let i = 0; i < editButton.length; i++) {
-      editButton[i].classList.remove("hidden");
-      deleteButton[i].classList.remove("hidden");
-    }
-
-    adminButton.textContent = "Logout";
-  } else {
-    //TODO: perhaps, have the error message just appear in the modal instead of an alert
-    alert("Incorrect username or password");
-    loginForm.reset();
-  }
-});
-
-//2. when user clicks on addEventButton, user is presented with the add event modal
-//  a) if user enters all required fields, a new event is created and added to the events container
-//      -the add event modal is closed
-//      -the new event is displayed in the events container
-//      -the new event has edit and delete buttons
-//  b) if user does not enter all required fields, a new event is not created
-//      -user is presented with an error message
-
-addEventButton.addEventListener("click", () => {
-  openModal(addEventModal);
-});
-
-addEventSubmit.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (
-        addEventDate.value !== "" &&
-        addEventTime.value !== "" &&
-        addEventLocation.value !== "" &&
-        addEventDescription.value !== ""
-    ) {
-        const newEvent = document.createElement("div");
-        newEvent.classList.add("eventDiv");
-    
-        const newEventDate = document.createElement("h3");
-        newEventDate.textContent = addEventDate.value;
-        newEvent.appendChild(newEventDate);
-    
-        const newEventTime = document.createElement("h3");
-        newEventTime.textContent = addEventTime.value;
-        newEvent.appendChild(newEventTime);
-    
-        const newEventLocation = document.createElement("h3");
-        newEventLocation.textContent = addEventLocation.value;
-        newEvent.appendChild(newEventLocation);
-    
-        const newEventDescription = document.createElement("p");
-        newEventDescription.textContent = addEventDescription.value;
-        newEvent.appendChild(newEventDescription);
-    
-        const newEditButton = document.createElement("button");
-        newEditButton.classList.add("editButton");
-        newEditButton.textContent = "Edit";
-        newEvent.appendChild(newEditButton);
-    
-        const newDeleteButton = document.createElement("button");
-        newDeleteButton.classList.add("deleteButton");
-        newDeleteButton.textContent = "Delete";
-        newEvent.appendChild(newDeleteButton);
-    
-        eventsContainer.appendChild(newEvent);
-    
-        closeModal(addEventModal);
-        addEventForm.reset();
-    } else {
-        alert("Please fill out all required fields");
-    }
-});
 
 
