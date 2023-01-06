@@ -164,7 +164,7 @@ adminButton.addEventListener("click", () => {
 
 loginSubmit.addEventListener("click", (e) => {
   e.preventDefault();
-  if (username.value === "admin" && password.value === "password") {
+  if (username.value === "a" && password.value === "a") {
     adminMode = true;
 
     closeModal(loginModal);
@@ -183,3 +183,63 @@ loginSubmit.addEventListener("click", (e) => {
     loginForm.reset();
   }
 });
+
+//2. when user clicks on addEventButton, user is presented with the add event modal
+//  a) if user enters all required fields, a new event is created and added to the events container
+//      -the add event modal is closed
+//      -the new event is displayed in the events container
+//      -the new event has edit and delete buttons
+//  b) if user does not enter all required fields, a new event is not created
+//      -user is presented with an error message
+
+addEventButton.addEventListener("click", () => {
+  openModal(addEventModal);
+});
+
+addEventSubmit.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (
+        addEventDate.value !== "" &&
+        addEventTime.value !== "" &&
+        addEventLocation.value !== "" &&
+        addEventDescription.value !== ""
+    ) {
+        const newEvent = document.createElement("div");
+        newEvent.classList.add("eventDiv");
+    
+        const newEventDate = document.createElement("h3");
+        newEventDate.textContent = addEventDate.value;
+        newEvent.appendChild(newEventDate);
+    
+        const newEventTime = document.createElement("h3");
+        newEventTime.textContent = addEventTime.value;
+        newEvent.appendChild(newEventTime);
+    
+        const newEventLocation = document.createElement("h3");
+        newEventLocation.textContent = addEventLocation.value;
+        newEvent.appendChild(newEventLocation);
+    
+        const newEventDescription = document.createElement("p");
+        newEventDescription.textContent = addEventDescription.value;
+        newEvent.appendChild(newEventDescription);
+    
+        const newEditButton = document.createElement("button");
+        newEditButton.classList.add("editButton");
+        newEditButton.textContent = "Edit";
+        newEvent.appendChild(newEditButton);
+    
+        const newDeleteButton = document.createElement("button");
+        newDeleteButton.classList.add("deleteButton");
+        newDeleteButton.textContent = "Delete";
+        newEvent.appendChild(newDeleteButton);
+    
+        eventsContainer.appendChild(newEvent);
+    
+        closeModal(addEventModal);
+        addEventForm.reset();
+    } else {
+        alert("Please fill out all required fields");
+    }
+});
+
+

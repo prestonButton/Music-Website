@@ -6,7 +6,7 @@
 
 body {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
 
@@ -105,8 +105,8 @@ body {
   margin: 15px;
   color: #ffffff;
   border: 2px solid #ffffff;
-  min-width: 40%;
-  max-width: calc(80% + 35px);
+  width: 80%;
+  min-width: 800px;
 }
 
 .editButton{
@@ -116,6 +116,7 @@ body {
     border-radius: 3px;
     padding: 0.5em 1em;
     cursor: pointer;
+    margin: 2px;
 }
 
 .deleteButton{
@@ -125,6 +126,7 @@ body {
     border-radius: 3px;
     padding: 0.5em 1em;
     cursor: pointer;
+    margin: 2px
 }
 
 .editButton:hover,
