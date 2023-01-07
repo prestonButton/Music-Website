@@ -139,7 +139,7 @@ document.addEventListener("keydown", (e) => {
 //      -the add event modal is not closed
 //
 //3. when user clicks on edit button, user is presented with the edit event modal
-//  a) the modal feilds are populated with the current event information
+//  a) the modal fields are populated with the current event information
 //  b) if user enters all required fields, the event is updated
 //      -the edit event modal is closed
 //      -the updated event is displayed in the events container
