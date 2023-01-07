@@ -1,5 +1,5 @@
 // Description: This file contains the JavaScript code for the application.
-//@author:  Preston Button
+//@author:  Preston Button http://github.com/prestonButton
 //@version: 1.0
 //@date:    2023-01-05
 
